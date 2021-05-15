@@ -2,6 +2,9 @@
 const express = require('express');
 //创建服务器实例
 const app = express();
+// 导入并使用用户信息路由模块
+const userinfoRouter = require('./router/userinfo')
+
 //-----------------------配置cors跨域------------------
 // 导入cors模块
 const cors = require('cors');
@@ -54,7 +57,9 @@ app.use(function(err, req, res, next) {
 const UseRouter = require('./router/user');
 app.use('/api', UseRouter);
 
-//启动服务器
+// 注意：以 /my 开头的接口，都是有权限的接口，需要进行 Token 身份认证
+app.use('/my', userinfoRouter)
+    //启动服务器
 app.listen('3007', function() {
     console.log('server running at 127.0.0.1:3007');
 });
